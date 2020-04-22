@@ -1,6 +1,14 @@
 const express = require('express');
 const app = express();
 const port = 8000;
+const expressLayouts = require('express-ejs-layouts');
+
+app.use(express.static('./assets'));
+app.use(expressLayouts);//ise hm route se pehledaalna hoga reason ki jo v view render hoga use btana hoga ki wo kisi layout ko belong krta h
+
+//extract style and scripts from sub pages into the layout ye static file set kia h
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
 
 //use express router
 app.use('/', require('./routes'));
