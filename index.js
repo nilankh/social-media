@@ -1,9 +1,12 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');//ye cookie manula authentication me jore h
 const app = express();
 const port = 8000;
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
 
+app.use(express.urlencoded());//it will read post request
+app.use(cookieParser());
 
 app.use(express.static('./assets'));
 app.use(expressLayouts);//ise hm route se pehledaalna hoga reason ki jo v view render hoga use btana hoga ki wo kisi layout ko belong krta h
