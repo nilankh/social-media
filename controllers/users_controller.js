@@ -11,6 +11,12 @@ module.exports.profile = function(req, res){
 }
 // render the sign up page
 module.exports.signUp = function(req, res){
+    //now we will do sign up and signin page avilable only when user is signed out
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
+
+
     return res.render('user_sign_up', {
         title: "Sociobook | Sign Up"
     });
@@ -18,6 +24,11 @@ module.exports.signUp = function(req, res){
 
 // render the ssign in page
 module.exports.signIn = function(req, res){
+    //now we will do sign up and signin page avilable only when user is signed out
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
+
     return res.render('user_sign_in', {
         title: "Sociobook | Sign In"
     });
@@ -46,5 +57,14 @@ module.exports.create = function(req, res){
 
 //sign in and create a session for the user
 module.exports.createSession = function(req, res){
+    return res.redirect('/');
+}
+
+
+//ye kab banaye h jb signout banaye h
+//signout is basically removing the user's session cookie to remove the identity
+module.exports.destroySession = function(req, res){
+    // before redirecting we need to logout
+    req.logout();//this is given by passport
     return res.redirect('/');
 }
