@@ -16,10 +16,13 @@
 
         <section id="feed-posts">
             <h4>Posts</h4>
+            <!-- usi ko dikhega jo sigin in h -->
+            <% if(locals.user) { %>
             <form action="/posts/create" id="new-post-form" method="POST">
                 <textarea name="content" cols="30" rows="4" placeholder="Type here...."></textarea>
                 <input type="submit" value="Post">
             </form>
+            <% } %>
         </section>
         <div id="posts-list-container">
             <ul>
