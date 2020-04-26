@@ -11,8 +11,15 @@ const passportLocal = require('./config/passport-local-strategy');
 
 //ye whi download krne ke baad ka h(npm install connect-mongo isse kya hoga jb v server restart kroge tb logout ni mtlb cookie delte ni hoga baar)
 const MongoStore = require('connect-mongo')(session);
+const sassMiddleware = require('node-sass-middleware');
 
-
+app.use(sassMiddleware({
+    src: './assets/scss',
+    dest: './assets/css',
+    debug: true,
+    outputStyle: 'extended',
+    prefix: '/css'
+}));
 app.use(express.urlencoded());//it will read post request
 app.use(cookieParser());
 
