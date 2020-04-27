@@ -1,7 +1,7 @@
 
 //ye post jv se banaye h tb ye line
 const Post = require('../models/post');
-
+const User = require('../models/user');
 // MANY ACTION IN ONE FILE CALLED AS CONTROLLER, a controller is a set of different actions
 module.exports.home = function(req, res){
     // return res.end('<h1> Express is up for sociobook </h1>');
@@ -35,10 +35,18 @@ module.exports.home = function(req, res){
         }
     })
     .exec(function(err, posts){
-        return res.render('home', {
-            title: "Sociobook | Home",
-            posts: posts
+
+        //to find al the users(user profile links deltetin nd updating objexrs in db )
+
+        User.find({}, function(err, users){
+            return res.render('home', {
+                title: "Sociobook | Home",
+                posts: posts,
+                all_users: users
+            });
         });
+
+        
     })
     
 }
