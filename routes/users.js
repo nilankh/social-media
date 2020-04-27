@@ -9,7 +9,10 @@ const khudSe = require('../controllers/trying_create_khudse');
 
 
 router.get('/profile/:id',passport.checkAuthentication, usersController.profile);
+router.post('/update/:id',passport.checkAuthentication, usersController.update);
 router.get('/khudse', khudSe.khudse);
+
+
 router.get('/sign-up', usersController.signUp);
 router.get('/sign-in', usersController.signIn);
 
