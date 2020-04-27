@@ -16,7 +16,25 @@ module.exports.home = function(req, res){
     // });
 
     //popultae the user of each post 
-    Post.find({}).populate('user').exec(function(err, posts){
+    //yhi se suru hua h display wala step1
+    //hmko id show ni krna h hmko usse assiciated name ya email dena  toa islia  hm populate kr rhe h or ye exec baaaki ka remainign function likhna h iske andar,mtb call back iske andar likhna hoga
+    // Post.find({}).populate('user').exec(function(err, posts){
+    //     return res.render('home', {
+    //         title: "Sociobook | Home",
+    //         posts: posts
+    //     });
+    // })
+
+    //when you want populate  multiple models
+    Post.find({})
+    .populate('user')
+    .populate({
+        path: 'comments',
+        populate: {
+            path: 'user'
+        }
+    })
+    .exec(function(err, posts){
         return res.render('home', {
             title: "Sociobook | Home",
             posts: posts
