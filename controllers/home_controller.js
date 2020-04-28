@@ -3,7 +3,7 @@
 const Post = require('../models/post');
 const User = require('../models/user');
 // MANY ACTION IN ONE FILE CALLED AS CONTROLLER, a controller is a set of different actions
-module.exports.home = function(req, res){
+module.exports.home = async function(req, res){
     // return res.end('<h1> Express is up for sociobook </h1>');
     // console.log(req.cookies);
     // res.cookie('user_id',25);
@@ -24,29 +24,29 @@ module.exports.home = function(req, res){
     //         posts: posts
     //     });
     // })
-
-    //when you want populate  multiple models
-    Post.find({})
-    .populate('user')
-    .populate({
-        path: 'comments',
-        populate: {
+    //to handle error (async await)
+    try{
+        //when you want populate  multiple models
+        let posts = await Post.find({})
+        .populate('user')
+        .populate({
+            path: 'comments',
+            populate: {
             path: 'user'
         }
-    })
-    .exec(function(err, posts){
-
-        //to find al the users(user profile links deltetin nd updating objexrs in db )
-
-        User.find({}, function(err, users){
-            return res.render('home', {
-                title: "Sociobook | Home",
-                posts: posts,
-                all_users: users
-            });
+    });
+    
+    let users = await User.find({});
+    
+        return res.render('home', {
+            title: "Sociobook | Home",
+            posts: posts,
+            all_users: users
         });
 
+    }catch(err){
         
-    })
-    
+        console.log('Error'. err);
+        return;
+     }
 }
