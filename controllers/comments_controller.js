@@ -17,11 +17,13 @@ module.exports.create = async function(req, res){
         //adding comment to push
         post.comments.push(comment);
         post.save();//whenever i m updating something we have to save so that we can block, or bola jye save kr lia db me
+        req.flash('success','comment krta h ji');
         res.redirect('/');
     }
     
     }catch(err){
-        console.log('Error', err);
+        // console.log('Error', err);
+        req.flash('error,err');
         return;
     }
     
@@ -36,14 +38,18 @@ module.exports.destroy = async function(req, res){
             let postId = comment.post;
                 
             comment.remove();
+            
             let post = Post.findByIdAndUpdate(postId, { $pull :{comments:req.params.id}});
-                    return res.redirect('back');
+            req.flash('success','comments deleted!');
+            return res.redirect('back');
                 
             }else{
+                req.flash('error', 'Unauthorized');
                 return res.redirect('back');
             }
     }catch(err){
-        console.log('Error', err);
+        // console.log('Error', err);
+        req.flash('error', err);
         return;
     }
  
