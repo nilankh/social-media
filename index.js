@@ -12,6 +12,8 @@ const passportLocal = require('./config/passport-local-strategy');
 //ye whi download krne ke baad ka h(npm install connect-mongo isse kya hoga jb v server restart kroge tb logout ni mtlb cookie delte ni hoga baar)
 const MongoStore = require('connect-mongo')(session);
 const sassMiddleware = require('node-sass-middleware');
+const flash = require('connect-flash');
+const customMware = require('./config/middleware'); // ye middle ware kaunsa h flash messages wala h
 
 app.use(sassMiddleware({
     src: './assets/scss',
@@ -63,6 +65,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
+app.use(flash());//this use session cookie thats y we have setted here after session n before routes 
+app.use(customMware.setFlash);
+
+
 //use express router
 app.use('/', require('./routes'));
 

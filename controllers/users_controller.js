@@ -73,6 +73,9 @@ module.exports.create = function(req, res){
 
 //sign in and create a session for the user
 module.exports.createSession = function(req, res){
+    
+    req.flash('success', 'Logged In successfully');//ye flash message h(first argumnet type which is setting as sucess kh v rkj skte the abcd v)
+    //to pass these flash mesage to html or ejs tempelate we have to create middlware which i have created in config, which fetches everyhting from req flash and puts into locals and finnally use krkne ke lia index .js me jaake app.use(customMware.setFLas)...so to access this in template layout .ejs me jaake krenge 
     return res.redirect('/');
 }
 
@@ -82,5 +85,7 @@ module.exports.createSession = function(req, res){
 module.exports.destroySession = function(req, res){
     // before redirecting we need to logout
     req.logout();//this is given by passport
+    req.flash('success', 'Logged Out successfully');
+    
     return res.redirect('/');
 }

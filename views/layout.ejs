@@ -12,6 +12,15 @@
 
         <!-- ye jo hm alag se _header.ejs or footer.ejs banaye h use include krna v toa h uska procedure neeche -->
         <%- include('_header'); -%>
+
+        <!-- ye bs receive kr rha h flash message ko -->
+        <% if(flash.success && flash.success.length > 0) { %>
+
+            <h5>
+               <%= flash.success %>
+            </h5>
+
+        <% } %>            
         <main id="layout-main">
             <%- body %>
         </main>
