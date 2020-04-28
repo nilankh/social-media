@@ -3,11 +3,22 @@ const Comment = require('../models/comment');//these line islia import kia q ki 
 
 module.exports.create = async function(req, res){
     try{
-        await Post.create({
+        let post = await Post.create({
             //HOME.EJS ME KO TEXT AREA ME NAAM H CONTENT WHI HOGA IDHR,or post.js me v conteent hi define kia ho
             content: req.body.content,
             user: req.user._id//ye user id islia h taaki pta rhe kaun user ka post kia
         });
+
+        //ye line convertinf to ajax se aayega
+        if(req.xhr){
+            return res.status(200).json({
+                data: {
+                    post: post
+                },
+                message: "Post created!"
+            });
+        }
+
         req.flash('success','Post published');
         return res.redirect('back');
 
