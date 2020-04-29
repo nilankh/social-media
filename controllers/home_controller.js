@@ -28,6 +28,7 @@ module.exports.home = async function(req, res){
     try{
         //when you want populate  multiple models
         let posts = await Post.find({})
+        .sort('-createdAt')//ye line bs sorted order me krega post
         .populate('user')
         .populate({
             path: 'comments',
