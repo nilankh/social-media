@@ -8,21 +8,52 @@ module.exports.profile = function(req, res){
     //ye line databse updating wala se aa rha bs User.fid wala
     User.findById(req.params.id, function(err, user){
         return res.render('user_profile', {
-            title: "Profile",
+            title: "User Profile",
             profile_user: user
         });
     });
  
 }
 //ye wala Deleting and Updating Objects in Database + Distributing Views
-module.exports.update = function(req, res){
+module.exports.update = async function(req, res){
+    // if(req.user.id == req.params.id){
+    //     User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+    //         return res.redirect('back');
+    //     });
+    // }else{
+            // req.flash('error', 'Unauthorized');
+    //     return res.status(401).send('Unauthorized');
+    // }
     if(req.user.id == req.params.id){
-        User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+        try{
+            let user = await User.findById(req.params.id);
+            User.uploadedAvatar(req, res, function(err){
+                if(err){console.log('****Multer Error:', err)}
+
+                // console.log(req.file);
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                if(req.file){
+                    // this is saving the path of the uploaded file into the avatar field in the user
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
+
+            });
+
+        }catch(err){
+            req.flash('error', err);
             return res.redirect('back');
-        });
+        }
+
     }else{
+        req.flash('error', 'Unauthorized');
         return res.status(401).send('Unauthorized');
     }
+
+
 }
 
 // render the sign up page
@@ -53,6 +84,7 @@ module.exports.signIn = function(req, res){
 //get up the sign up data
 module.exports.create = function(req, res){
     if(req.body.password != req.body.confirm_password){
+        req.flash('error','Passwords do not match');
         return res.redirect('back');
     }
 
@@ -66,6 +98,7 @@ module.exports.create = function(req, res){
                 return res.redirect('/users/sign-in');
             });
         }else{
+            req.flash('success', 'You have signed up, login to continue');
             return res.redirect('back');
         }
     });

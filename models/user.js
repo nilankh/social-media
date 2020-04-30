@@ -33,11 +33,17 @@ let storage = multer.diskStorage({
       cb(null, path.join(__dirname, '..',AVATAR_PATH));
     },
     filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now())
+      cb(null, file.fieldname + '-' + Date.now());
+      //file.fieldname feildname means avatar here so ye jo jb v upload hoyega avatar + date now
     }
-  })
+  });
 
 
+//statics function can be called overalled on whole class
+userScehma.statics.uploadedAvatar = multer({storage: storage}).single('avatar');
+//this .single says that only one instance only one file willl be uploaded for the field name avatar not multiple file
+
+userScehma.statics.avatarPath = AVATAR_PATH;
 
 const User = mongoose.model('User', userScehma);
 
