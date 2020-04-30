@@ -18,11 +18,26 @@ const userScehma = new mongoose.Schema({
     name: {
         type: String,
         required: true
+    },
+    avatar: {
+        type: String
     }
 }, {
     timestamps: true
     // ye timestamp show krega created at signed in at update at
 });
+
+//getting this saved to /uploads/users/avatars' to ye uska setting h neeche wala line sb
+let storage = multer.diskStorage({
+    destination: function (req, file, cb) {//cb means callback function
+      cb(null, path.join(__dirname, '..',AVATAR_PATH));
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now())
+    }
+  })
+
+
 
 const User = mongoose.model('User', userScehma);
 
