@@ -26,6 +26,10 @@ app.use(express.urlencoded());//it will read post request
 app.use(cookieParser());
 
 app.use(express.static('./assets'));
+//ye line jo neeche likhe h wo multer me aya wo photo ka routes h
+//make the upload path avilable to the browser
+app.use('/uploads', express.static(__dirname +'/uploads'));
+
 app.use(expressLayouts);//ise hm route se pehledaalna hoga reason ki jo v view render hoga use btana hoga ki wo kisi layout ko belong krta h
 
 //extract style and scripts from sub pages into the layout ye static file set kia h
