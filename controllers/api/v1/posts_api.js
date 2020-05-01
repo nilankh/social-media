@@ -1,5 +1,6 @@
 const Post = require('../../../models/post');
 const Comment = require('../../../models/comment');
+
 module.exports.index = async function(req, res){
     //index is genreally usually use when u want to list down something as an action name
    
@@ -28,10 +29,7 @@ module.exports.destroy = async function(req, res){
             post.remove();
             
             await Comment.deleteMany({post: req.params.id});
-            
-            
-
-
+            // await Comment.findByIdAndRemove({post: req.params.id}); ni kaam kre toa ye try kro
             return res.json(200, {
                 message: "Post and associated comments deleted!"
             });
