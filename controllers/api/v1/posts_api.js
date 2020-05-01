@@ -2,6 +2,7 @@ const Post = require('../../../models/post');
 const Comment = require('../../../models/comment');
 module.exports.index = async function(req, res){
     //index is genreally usually use when u want to list down something as an action name
+   
     let posts = await Post.find({})
         .sort('-createdAt')//ye line bs sorted order me krega post
         .populate('user')
@@ -12,15 +13,11 @@ module.exports.index = async function(req, res){
         }
     });
     
-    
     return res.json(200, {
         message: "List of posts",
         posts: posts
-    });
+    })
 }
-
-
-//copy kia h post controller se
 
 module.exports.destroy = async function(req, res){
     try{
@@ -32,11 +29,11 @@ module.exports.destroy = async function(req, res){
             
             await Comment.deleteMany({post: req.params.id});
             
-           
+            
 
-            // req.flash('success','Post and associated comments deleted!');
+
             return res.json(200, {
-                message: "IPost and associated comments deleted"
+                message: "Post and associated comments deleted!"
             });
         // }else{
         //     req.flash('error','You can not delete this post');
@@ -45,8 +42,9 @@ module.exports.destroy = async function(req, res){
 
 
     }catch(err){
-        console.log('****', err);
-        
+        // console.log('Error', err);
+        // req.flash('error',err);
+        console.log('******', err);
         return res.json(500, {
             message: "Internal server error"
         });

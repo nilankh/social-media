@@ -1,4 +1,3 @@
-
 //ye post jv se banaye h tb ye line
 const Post = require('../models/post');
 const User = require('../models/user');
