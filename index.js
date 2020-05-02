@@ -9,6 +9,8 @@ const session = require('express-session');//expression session passport js me
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 
+const passportJWT = require('./config/passport-jwt-strategy');//ye file kb aaya api's me
+
 //ye whi download krne ke baad ka h(npm install connect-mongo isse kya hoga jb v server restart kroge tb logout ni mtlb cookie delte ni hoga baar)
 const MongoStore = require('connect-mongo')(session);
 const sassMiddleware = require('node-sass-middleware');
