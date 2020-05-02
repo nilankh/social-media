@@ -19,7 +19,7 @@ module.exports.createSession = async function(req, res){
             message: "Sign in successfull, here is your token , please keep it safe",
             data: {
                 // token pass kr rhe h jb user mil jyga using jwt library user.toJSON this is the part which get descrypyted
-                token: jwt.sign(user.toJSON(), 'sociobook', {expiresIn: '10000'})
+                token: jwt.sign(user.toJSON(), 'sociobook', {expiresIn: '100000'})
             }
         });
     }catch(err){
