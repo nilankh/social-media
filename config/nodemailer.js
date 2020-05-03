@@ -15,7 +15,7 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-// render templatee defines whenever i m going to send an html email where the file will be placed  inside views
+// render templatee defines whenever i m going to send an html email where the file will be placed  inside views 
 let renderTemplate = (data, relativePath) => {
     let mailHTML;//where i will be storing all html is going to be send in mail
     ejs.renderFile(
