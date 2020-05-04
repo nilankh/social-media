@@ -10,8 +10,8 @@ let transporter = nodemailer.createTransport({
     port: 587,//587 q use kr rhe h bcz we will be using tls which is highest form of security
     secure: false,
     auth: {
-        user: 'nilankpunj',
-        pass:'7277927823'
+        user: 'punjneel',
+        pass:'darbhanga'
     }
 });
 
@@ -22,7 +22,7 @@ let renderTemplate = (data, relativePath) => {
         path.join(__dirname, '../views/mailers', relativePath),// mailers will carry all html elements, this reative path is place where this function is being called
         data,
         function(err, template){
-            if(err){console.log('error in rendering template'); return}
+            if(err){console.log('error in rendering template', err); return}
 
             mailHTML = template;
         }
