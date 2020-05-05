@@ -1,6 +1,9 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
 const commentsMailer = require('../mailers/comments_mailer');
+const queue = require('../config/kue');
+const commentEmailWorker = require('../workers/comment_email_worker');
+
 
 module.exports.create = async function(req, res){
     
@@ -20,7 +23,15 @@ module.exports.create = async function(req, res){
         post.save();//whenever i m updating something we have to save so that we can block, or bola jye save kr lia db me
 
         comment = await comment.populate('user', 'name email').execPopulate();
-        commentsMailer.newComment(comment);
+        // commentsMailer.newComment(comment);ye lien comment kr dia h q ki kue me iska use kia h
+        let job = queue.create('emails', comment).save(function(err){
+            //y we have given this name as a job bcz every task which is assigned is job
+            if(err){
+                console.log('error in sending to the queue');
+                return;
+            }
+            console.log('job enqueud',job.id);
+        });
 
         if(req.xhr){
             // Similar for comments to fetch the user's id!
