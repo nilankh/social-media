@@ -25,6 +25,7 @@ module.exports.home = async function(req, res){
     // })
     //to handle error (async await)
     try{
+        //Change :: populate the likes of each post and comment
         //when you want populate  multiple models
         let posts = await Post.find({})
         .sort('-createdAt')//ye line bs sorted order me krega post
@@ -33,8 +34,11 @@ module.exports.home = async function(req, res){
             path: 'comments',
             populate: {
             path: 'user'
+        },
+        populate: {
+            path: 'likes'// this is for the comments
         }
-    });
+    }).populate('likes');//this is for the post
     
     let users = await User.find({});
     
