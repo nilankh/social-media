@@ -20,6 +20,7 @@ router.use('/users', require('./users'));
 router.use('/posts', require('./posts'));
 router.use('/comments', require('./comments'));
 router.use('/likes', require('./likes'));
+
 // requriree kr rhe h api folder ko
 router.use('/api', require('./api'));
 

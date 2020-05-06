@@ -22,7 +22,11 @@ const userScehma = new mongoose.Schema({
     avatar: {
         type: String
     }
-}, {
+},
+
+    
+
+{
     timestamps: true
     // ye timestamp show krega created at signed in at update at
 });
